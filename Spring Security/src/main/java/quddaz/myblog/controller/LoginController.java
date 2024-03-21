@@ -17,6 +17,7 @@ import quddaz.myblog.service.MemberService;
 @Slf4j
 @RequiredArgsConstructor
 public class LoginController {
+
   private final MemberService memberService;
 
   @GetMapping("/login")
