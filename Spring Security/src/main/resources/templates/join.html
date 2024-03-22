@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Page</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+      }
+      .join-container {
+          width: 300px;
+          padding: 20px;
+          background-color: #fff;
+          border-radius: 5px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+      .form-group {
+          margin-bottom: 20px;
+      }
+      label {
+          display: block;
+          margin-bottom: 5px;
+          font-weight: bold;
+      }
+      input[type="text"],
+      input[type="password"] {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+      }
+      input[type="submit"] {
+          width: 100%;
+          padding: 10px;
+          background-color: #007bff;
+          border: none;
+          border-radius: 3px;
+          color: #fff;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+      }
+      input[type="submit"]:hover {
+          background-color: #0056b3;
+      }
+      .field-error {
+          color: red;
+          font-size: 12px;
+      }
+  </style>
+</head>
+<body>
+<div class="join-container">
+  <h2>Join</h2>
+  <form action="/join" method="POST" th:object="${joinDTO}">
+    <div class="form-group">
+      <label for="userName">Username:</label>
+      <!-- 입력값을 서버로 전달하기 위해 name 속성 추가 -->
+      <input type="text" id="userName" name="userName" th:field="*{userName}" required>
+      <!-- 유효성 검사 오류 메시지 표시 -->
+      <div class="field-error" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></div>
+      <div th:if="${#fields.hasGlobalErrors()}">
+        <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+           th:text="${err}">글로벌 오류 메시지</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <!-- 입력값을 서버로 전달하기 위해 name 속성 추가 -->
+      <input type="password" id="password" name="password" th:field="*{password}" required>
+      <!-- 유효성 검사 오류 메시지 표시 -->
+      <div class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    </div>
+    <input type="submit" value="Join">
+  </form>
+  <button onclick="location.href='/login.html'">로그인으로 돌아가기</button>
+</div>
+</body>
+</html>
