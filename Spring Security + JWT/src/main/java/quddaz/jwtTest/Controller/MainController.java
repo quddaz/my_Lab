@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MainController {
 
   @GetMapping("/main")
-  public String mainP() {
+  public String main() {
 
     return "main Controller";
   }
