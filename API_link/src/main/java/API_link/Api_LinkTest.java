@@ -17,7 +17,7 @@ import java.net.URLEncoder;
 @RestController
 public class Api_LinkTest {
 
-  @GetMapping("/forecast")
+  @GetMapping("/test")
   public ResponseEntity<String> callForecastApi(
       @RequestParam(value = "rsdAreaCd") String rsdArea,
       @RequestParam(value = "ageCd") String ageCd,
