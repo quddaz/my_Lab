@@ -19,16 +19,16 @@ public class Api_LinkTest {
 
   @GetMapping("/test")
   public ResponseEntity<String> callForecastApi(
-      @RequestParam(value = "rsdAreaCd") String rsdArea,
-      @RequestParam(value = "ageCd") String ageCd,
-      @RequestParam(value = "closStdrYm") String closStdrYm
+      @RequestParam(value = "rsdAreaCd") String rsdArea, // 시군구 코드
+      @RequestParam(value = "ageCd") String ageCd, // 나이
+      @RequestParam(value = "closStdrYm") String closStdrYm //마감 연월
   ) {
     StringBuilder result = new StringBuilder();
 
     try {
       String apiUrl = "https://eis.work.go.kr/opi/joApi.do";
       String apiSecd = "OPIA";
-      String sxdsCd = "M";
+      String sxdsCd = "N";
       int bgnPage = 1;
       int display = 10;
 
