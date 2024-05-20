@@ -1,81 +1,92 @@
 package API_link;
 
+import DTO.ResponseData;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
+@Slf4j
 public class Api_LinkTest {
 
+  @Value("${key}")
+  private String secretKey;
+
+  private final String apiUrl = "https://apis.data.go.kr/B552583/job/job_list";
   @GetMapping("/test")
-  public ResponseEntity<String> callForecastApi(
-      @RequestParam(value = "rsdAreaCd") String rsdArea, // 시군구 코드
-      @RequestParam(value = "ageCd") String ageCd, // 나이
-      @RequestParam(value = "closStdrYm") String closStdrYm //마감 연월
+  public ResponseEntity<String> ApiTest(
+      @RequestParam(value = "page") String page
   ) {
-    StringBuilder result = new StringBuilder();
+    try {
+      // API 호출 및 응답 받기
+      RestTemplate restTemplate = new RestTemplate();
+      String url = apiUrl + "?serviceKey=" + secretKey + "&pageNo=" + page + "&numOfRows=100";
+      String responseEntity = String.valueOf(restTemplate.getForEntity(url, String.class));
+
+      return new ResponseEntity<>(responseEntity,HttpStatus.OK );
+    } catch (Exception e) {
+      log.error("API 호출 중 에러 발생", e);
+      // 예외 발생 시 에러 응답 반환
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+  @GetMapping("/jobs")
+  public ResponseEntity<ResponseData.Items> callApi(
+      @RequestParam(value = "page") String page,
+      @RequestParam(value = "local") String local
+  ) {
+    log.info("API 호출: page={}, local={}", page, local);
 
     try {
-      String apiUrl = "https://eis.work.go.kr/opi/joApi.do";
-      String apiSecd = "OPIA";
-      String sxdsCd = "N";
-      int bgnPage = 1;
-      int display = 10;
+      // API 호출 및 응답 받기
+      RestTemplate restTemplate = new RestTemplate();
+      String url = apiUrl + "?serviceKey=" + URLEncoder.encode(secretKey, "UTF-8") + "&pageNo=" + page + "&numOfRows=100";
+      ResponseEntity<ResponseData> responseEntity = restTemplate.getForEntity(url, ResponseData.class);
 
-      // URL 구성
-      String urlStr = apiUrl + "?apiSecd=" + URLEncoder.encode(apiSecd, "UTF-8")
-          + "&rsdAreaCd=" + URLEncoder.encode(rsdArea, "UTF-8")
-          + "&sxdsCd=" + URLEncoder.encode(sxdsCd, "UTF-8")
-          + "&ageCd=" + URLEncoder.encode(ageCd, "UTF-8")
-          + "&rernSecd=XML"
-          + "&closStdrYm=" + URLEncoder.encode(closStdrYm, "UTF-8")
-          + "&bgnPage=" + bgnPage
-          + "&display=" + display;
-
-      URL url = new URL(urlStr);
-
-      HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-      urlConnection.setConnectTimeout(3000);
-      urlConnection.setReadTimeout(3000);
-      urlConnection.setRequestMethod("GET");
-      urlConnection.setDoInput(true);
-
-      if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-        InputStream inputStream = urlConnection.getInputStream();
-        result.append(readStreamToString(inputStream, "EUC-KR"));
+      // API 응답 확인 및 처리
+      if (responseEntity.getStatusCode().is2xxSuccessful()) {
+        ResponseData responseData = responseEntity.getBody();
+        if (responseData != null && responseData.getBody() != null && responseData.getBody().getItems() != null) {
+          List<ResponseData.Item> filteredItems = new ArrayList<>();
+          String targetPrefix = local.split(" ")[0]; // local 파라미터를 공백을 기준으로 분리하고 첫 번째 단어를 선택
+          for (ResponseData.Item item : responseData.getBody().getItems().getItem()) {
+            if (item.getCompAddr() != null && item.getCompAddr().startsWith(targetPrefix)) {
+              filteredItems.add(item);
+            }
+          }
+          responseData.getBody().getItems().setItem(filteredItems);
+        }
+        return new ResponseEntity<>(responseData.getBody().getItems(), HttpStatus.OK);
       } else {
-        throw new IOException("HTTP error code : " + urlConnection.getResponseCode());
+        // 응답이 성공적이지 않은 경우
+        log.error("API 호출 실패: {}", responseEntity.getStatusCodeValue());
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
       }
-
-      urlConnection.disconnect();
+    } catch (UnsupportedEncodingException e) {
+      // URL 인코딩 실패
+      log.error("URL 인코딩 실패", e);
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    } catch (HttpServerErrorException e) {
+      // 외부 API 서버에서 에러 응답 반환
+      log.error("외부 API 서버에서 에러 응답 반환: {}", e.getStatusCode());
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     } catch (Exception e) {
-      e.printStackTrace();
+      // 그 외의 예외 발생
+      log.error("API 호출 중 에러 발생", e);
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    return new ResponseEntity<>(result.toString(), HttpStatus.OK);
-  }
-
-  // InputStream을 문자열로 변환하는 메서드
-  private String readStreamToString(InputStream stream, String charset) throws IOException {
-    StringBuilder result = new StringBuilder();
-
-    try (BufferedReader br = new BufferedReader(new InputStreamReader(stream, charset))) {
-      String readLine;
-      while ((readLine = br.readLine()) != null) {
-        result.append(readLine).append("\n");
-      }
-    }
-
-    return result.toString();
   }
 }

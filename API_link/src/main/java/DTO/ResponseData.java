@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
-
 @Getter
 @Setter
 @ToString
@@ -50,8 +49,6 @@ public class ResponseData {
     private String regagnName;
     private String reqCareer;
     private String reqEduc;
-    private String rno;
-    private String rnum;
     private String salary;
     private String salaryType;
     private String termDate;
