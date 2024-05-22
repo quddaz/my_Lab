@@ -33,7 +33,7 @@ public class Api_LinkTest {
     try {
       // API 호출 및 응답 받기
       RestTemplate restTemplate = new RestTemplate();
-      String url = apiUrl + "?serviceKey=" + secretKey + "&pageNo=" + page + "&numOfRows=100";
+      String url = apiUrl + "?serviceKey=" + secretKey + "&pageNo=" + page + "&numOfRows=400";
       String responseEntity = String.valueOf(restTemplate.getForEntity(url, String.class));
 
       return new ResponseEntity<>(responseEntity,HttpStatus.OK );
@@ -45,19 +45,17 @@ public class Api_LinkTest {
   }
   @GetMapping("/jobs")
   public ResponseEntity<ResponseData.Items> callApi(
-      @RequestParam(value = "page") String page,
       @RequestParam(value = "local") String local
   ) {
-    log.info("API 호출: page={}, local={}", page, local);
+    log.info("API 호출:  local={}", local);
 
     try {
       // API 호출 및 응답 받기
       RestTemplate restTemplate = new RestTemplate();
-      String url = apiUrl + "?serviceKey=" + URLEncoder.encode(secretKey, "UTF-8") + "&pageNo=" + page + "&numOfRows=100";
+      String url = apiUrl + "?serviceKey=" + secretKey + "&pageNo=1" + "&numOfRows=200";
       ResponseEntity<ResponseData> responseEntity = restTemplate.getForEntity(url, ResponseData.class);
 
       // API 응답 확인 및 처리
-      if (responseEntity.getStatusCode().is2xxSuccessful()) {
         ResponseData responseData = responseEntity.getBody();
         if (responseData != null && responseData.getBody() != null && responseData.getBody().getItems() != null) {
           List<ResponseData.Item> filteredItems = new ArrayList<>();
@@ -70,15 +68,6 @@ public class Api_LinkTest {
           responseData.getBody().getItems().setItem(filteredItems);
         }
         return new ResponseEntity<>(responseData.getBody().getItems(), HttpStatus.OK);
-      } else {
-        // 응답이 성공적이지 않은 경우
-        log.error("API 호출 실패: {}", responseEntity.getStatusCodeValue());
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-      }
-    } catch (UnsupportedEncodingException e) {
-      // URL 인코딩 실패
-      log.error("URL 인코딩 실패", e);
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     } catch (HttpServerErrorException e) {
       // 외부 API 서버에서 에러 응답 반환
       log.error("외부 API 서버에서 에러 응답 반환: {}", e.getStatusCode());
