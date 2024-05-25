@@ -4,12 +4,15 @@ import './index.css';
 import Job from './component/Jobs/Job';
 import reportWebVitals from './reportWebVitals';
 import KakaoMap from './component/map/KakaoMap';
-
+import UserAuthChart from './component/chart/UserAuthChart';
+import UserBarChart from './component/chart/UserBarChart';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <KakaoMap />
     <Job/>
+    <UserAuthChart/>
+    <UserBarChart/>
   </React.StrictMode>
 );
 

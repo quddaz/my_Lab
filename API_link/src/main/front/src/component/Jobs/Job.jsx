@@ -2,16 +2,20 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Job.css";
 
+const regions = ['서울특별시','경기도','강원도','전라남도', '전라북도', '충청남도', '충청북도', '경상남도', '경상북도', '인천광역시', '광주광역시', '부산광역시', '대전광역시'];
+const empTypes = ['상용직', '계약직'];
+
+
 function Job() {
     const [jobList, setJobList] = useState([]); 
     const [region, setRegion] = useState(""); 
-
+    const [empType, setEmpType] =  useState("");
     useEffect(() => {
         fetchJobs();
-    }, [region]);
+    }, [region,empType]);
 
     const fetchJobs = () => {
-        axios.get(`/jobs?local=${region}`)
+        axios.get(`/jobs?region=${region}&empType=${empType}`)
             .then((res) => {
                 setJobList(res.data.item);
             })
@@ -23,28 +27,24 @@ function Job() {
     const handleRegionChange = (event) => {
         setRegion(event.target.value);
     };
+    const handleEmpTypeChange = (event) => {
+        setEmpType(event.target.value);
+    };
 
 
 
     return (
         <div className="job-board-container">
             <select className="select-region" value={region} onChange={handleRegionChange}>
-                <option value="">All Regions</option>
-                <option value="서울특별시">서울특별시</option>
-                <option value="경기도">경기도</option>
-                <option value="강원도">강원도</option>
-                <option value="전라남도">전라남도</option>
-                <option value="전라북도">전라북도</option>
-                <option value="충청남도">충청남도</option>
-                <option value="충청북도">충청북도</option>
-                <option value="경상남도">경상남도</option>
-                <option value="경상북도">경상북도</option>
-                <option value="인천광역시">인천광역시</option>
-                <option value="광주광역시">광주광역시</option>
-                <option value="부산광역시">부산광역시</option>
-                <option value="대전광역시">대전광역시</option>
+                {regions.map(regi => (
+                    <option key={regi} value={regi}>{regi}</option>
+                ))}
             </select>
-
+            <select className="select-region" value={empType} onChange={handleEmpTypeChange}>
+                {empTypes.map(emp => (
+                    <option key={emp} value={emp}>{emp}</option>
+                ))}
+            </select>
             <ul className="job-list">
                 {jobList.map((job, index) => (
                     <li className="job-item" key={index}>
