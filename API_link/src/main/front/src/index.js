@@ -1,18 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Job from './component/Jobs/Job';
 import reportWebVitals from './reportWebVitals';
-import KakaoMap from './component/map/KakaoMap';
-import UserAuthChart from './component/chart/UserAuthChart';
-import UserBarChart from './component/chart/UserBarChart';
+import App from './App';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <KakaoMap />
-    <Job/>
-    <UserAuthChart/>
-    <UserBarChart/>
+    <App/>
   </React.StrictMode>
 );
 

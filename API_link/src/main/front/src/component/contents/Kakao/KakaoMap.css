@@ -1,0 +1,81 @@
+.kakao-map-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #f6f7f4;
+}
+
+.kakao-map-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px;
+}
+
+.kakao-map-location-heading {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.kakao-map-branch-select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.kakao-map-branch-select:focus {
+  border-color: #ffffff;
+}
+
+.kakao-map-sub-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.kakao-map-map-container {
+  width: 100%;
+  height: 400px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.kakao-map-info-panel {
+  width: 80%;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.kakao-map-location {
+  font-size: 16px;
+  color: rgb(165, 110, 62);
+  padding-bottom: 10px;
+}
+
+.kakao-map-info-panel h2 {
+  margin-top: 0;
+  margin-right: 20px;
+}
+
+.kakao-map-info-panel .details {
+  color: #777;
+  text-align: left;
+}
+
+.kakao-map-info-panel p {
+  margin: 5px 0;
+}

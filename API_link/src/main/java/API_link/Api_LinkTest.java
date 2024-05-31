@@ -1,6 +1,7 @@
 package API_link;
 
-import DTO.ResponseData;
+
+import API_link.DTO.ResponseData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,23 +44,27 @@ public class Api_LinkTest {
   }
   @GetMapping("/jobs")
   public ResponseEntity<ResponseData.Items> callApi(
-      @RequestParam(value = "local") String local
+      @RequestParam(value = "region") String region
+      ,@RequestParam(value = "empType") String empType
   ) {
-    log.info("API 호출:  local={}", local);
+    log.info("API 호출:  region={}, empType={}",region,empType);
 
     try {
       // API 호출 및 응답 받기
       RestTemplate restTemplate = new RestTemplate();
       String url = apiUrl + "?serviceKey=" + secretKey + "&pageNo=1" + "&numOfRows=200";
+      ResponseEntity<String> reposne = restTemplate.getForEntity(url, String.class);
+      System.out.println(reposne);
       ResponseEntity<ResponseData> responseEntity = restTemplate.getForEntity(url, ResponseData.class);
 
       // API 응답 확인 및 처리
         ResponseData responseData = responseEntity.getBody();
         if (responseData != null && responseData.getBody() != null && responseData.getBody().getItems() != null) {
           List<ResponseData.Item> filteredItems = new ArrayList<>();
-          String targetPrefix = local.split(" ")[0]; // local 파라미터를 공백을 기준으로 분리하고 첫 번째 단어를 선택
+          String  region_targetPrefix = region.split(" ")[0];
+          String empType_targetPrefix = empType.split(" ")[0];
           for (ResponseData.Item item : responseData.getBody().getItems().getItem()) {
-            if (item.getCompAddr() != null && item.getCompAddr().startsWith(targetPrefix)) {
+            if (item.getCompAddr() != null && item.getCompAddr().startsWith(region_targetPrefix)&&item.getEmpType().startsWith(empType_targetPrefix)) {
               filteredItems.add(item);
             }
           }
