@@ -20,7 +20,7 @@ public class UserService {
     // USERNAME 중복체크
     userRepository.findByUserName(userName)
         .ifPresent(user -> {
-          throw new AppException(ErrorCode.USERNAME_DUPLICATED,userName+ "는 이미 있습니다.");
+          throw new AppException(ErrorCode.USERNAME_DUPLICATED);
     });
     // 저장
     User user = User.builder()
@@ -28,5 +28,17 @@ public class UserService {
             .password(bCryptPasswordEncoder.encode(password))
             .build();
     userRepository.save(user);
+  }
+  public String login(String userName, String password){
+    //userName 없음
+    User user = userRepository.findByUserName(userName)
+        .orElseThrow(() ->
+          new AppException(ErrorCode.FAILD_LOGIN));
+    //password 틀림
+    if(!bCryptPasswordEncoder.matches(password, user.getPassword())){
+      throw new AppException(ErrorCode.FAILD_LOGIN);
+    }
+    //앞에서 Exception 안났으면 토큰 발행
+    return "token";
   }
 }

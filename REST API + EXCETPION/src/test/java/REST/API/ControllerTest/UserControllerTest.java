@@ -2,6 +2,7 @@ package REST.API.ControllerTest;
 
 import REST.API.Service.UserService;
 import REST.API.domain.dto.UserJoinRequest;
+import REST.API.domain.dto.UserLoginRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,5 +51,17 @@ public class UserControllerTest {
             .content(objectMapper.writeValueAsBytes(new UserJoinRequest(userName,password))))
         .andDo(print())
         .andExpect(status().isConflict());
+  }
+
+  @Test
+  @DisplayName("로그인 성공")
+  void login_success() throws Exception{
+    String userName = "KIM";
+    String password = "1q2w3e4r";
+    mockMvc.perform(post("/api/v1/users/login")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsBytes(new UserLoginRequest(userName,password))))
+        .andDo(print())
+        .andExpect(status().isOk());
   }
 }
