@@ -1,9 +1,9 @@
-package REST.API.Service;
+package REST.API.User.Service;
 
-import REST.API.Exception.AppException;
-import REST.API.Exception.ErrorCode;
-import REST.API.Respository.UserRepository;
-import REST.API.domain.User;
+import REST.API.global.Exception.BaseException.AppException;
+import REST.API.global.Exception.errorCode.UserErrorCode;
+import REST.API.User.Respository.UserRepository;
+import REST.API.User.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,7 +24,7 @@ public class UserService {
     // USERNAME 중복체크
     userRepository.findByUserName(userName)
         .ifPresent(user -> {
-          throw new AppException(ErrorCode.USERNAME_DUPLICATED);
+          throw new AppException(UserErrorCode.USERNAME_DUPLICATED);
     });
     // 저장
     User user = User.builder()
@@ -37,10 +37,10 @@ public class UserService {
     //userName 없음
     User user = userRepository.findByUserName(userName)
         .orElseThrow(() ->
-          new AppException(ErrorCode.FAILD_LOGIN));
+          new AppException(UserErrorCode.FAILD_LOGIN));
     //password 틀림
     if(!bCryptPasswordEncoder.matches(password, user.getPassword())){
-      throw new AppException(ErrorCode.FAILD_LOGIN);
+      throw new AppException(UserErrorCode.FAILD_LOGIN);
     }
     return "token";
   }

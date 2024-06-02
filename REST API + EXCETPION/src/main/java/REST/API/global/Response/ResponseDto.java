@@ -1,4 +1,4 @@
-package REST.API.domain.dto;
+package REST.API.global.Response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

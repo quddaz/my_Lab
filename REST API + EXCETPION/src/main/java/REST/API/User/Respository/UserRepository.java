@@ -1,6 +1,6 @@
-package REST.API.Respository;
+package REST.API.User.Respository;
 
-import REST.API.domain.User;
+import REST.API.User.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

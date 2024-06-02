@@ -1,6 +1,8 @@
-package REST.API.Exception;
+package REST.API.global.Exception.handler;
 
-import REST.API.domain.dto.ResponseDto;
+import REST.API.global.Exception.BaseException.AppException;
+import REST.API.global.Exception.errorCode.ErrorCode;
+import REST.API.global.Response.ResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

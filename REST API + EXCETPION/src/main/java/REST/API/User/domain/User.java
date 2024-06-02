@@ -1,4 +1,4 @@
-package REST.API.domain;
+package REST.API.User.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

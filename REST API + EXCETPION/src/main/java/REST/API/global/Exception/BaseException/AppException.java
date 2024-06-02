@@ -1,5 +1,6 @@
-package REST.API.Exception;
+package REST.API.global.Exception.BaseException;
 
+import REST.API.global.Exception.errorCode.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
