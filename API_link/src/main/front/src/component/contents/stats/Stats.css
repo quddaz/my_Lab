@@ -1,0 +1,81 @@
+.stats-container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  margin: 0 auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.quarter-selection {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.quarter-selection button {
+  margin-left: 10px;
+  padding: 10px;
+}
+.total-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 400px;
+  width: 100%;
+}
+.stats-Alldata {
+  display: flex;
+  align-items: center; /* 상하 중앙 정렬 */
+  flex-direction: row;
+  justify-content: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  margin-left: 10px;
+  width: 48%;
+  height: 100%;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 90%;
+}
+
+.stats-section {
+  width: 100%; 
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.stat-item {
+  padding: 10px 0;
+  text-align: left;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+
+.stat-item p {
+  margin: 5px 0;
+}
+
+.stat-item .value {
+  font-size: 2em;
+}
+
+.stat-item .unit {
+  font-size: 0.8em;
+}
+
+.stat-item .name {
+  font-size: 1em;
+}

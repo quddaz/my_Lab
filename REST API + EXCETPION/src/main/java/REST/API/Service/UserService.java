@@ -5,6 +5,7 @@ import REST.API.Exception.ErrorCode;
 import REST.API.Respository.UserRepository;
 import REST.API.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class UserService {
+  @Value("${jwt.token.secret}")
+  private String key;
+  private final long expireTimeMs = 1000 * 60 * 60L;
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
   private final UserRepository userRepository;
   @Transactional
@@ -38,7 +42,6 @@ public class UserService {
     if(!bCryptPasswordEncoder.matches(password, user.getPassword())){
       throw new AppException(ErrorCode.FAILD_LOGIN);
     }
-    //앞에서 Exception 안났으면 토큰 발행
     return "token";
   }
 }

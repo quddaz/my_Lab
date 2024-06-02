@@ -4,7 +4,6 @@ import {
     Routes,
     Route
 } from "react-router-dom";
-import styled from "styled-components";
 import FetchJob from './component/page/FetchJob';
 import Information from './component/page/Information';
 import MainPage from "./component/page/MainPage";

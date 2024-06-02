@@ -60,6 +60,7 @@ const NavLinks = styled.ul`
 
 const ContentWrapper = styled.div`
   margin-top: 100px; 
+  background-color:#f4eef4;
 `;
 
 const TopMenu = () => {
