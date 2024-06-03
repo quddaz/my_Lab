@@ -1,0 +1,24 @@
+.population-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  height: 100px;
+}
+
+.population-table th,
+.population-table td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.population-table th {
+  background-color: #f2f2f2;
+}
+
+.population-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.DT {
+  text-align: right;
+}

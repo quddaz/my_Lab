@@ -1,0 +1,37 @@
+.stats-container {
+    background-color: white;
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .total-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 300px;
+    width: 100%;
+  }
+  
+  .stats-all-data {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    background-color: white;
+    margin-left: 10px;
+    width: 48%;
+    height: 100%;
+  }
+  
+  .stats-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 90%;
+  }
+  

@@ -9,7 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
-import quddaz.jwtTest.Entity.DTO.CustomUserDetails;
+import quddaz.jwtTest.auth.CustomUserDetails;
 import quddaz.jwtTest.Entity.UserEntity;
 
 import java.io.IOException;

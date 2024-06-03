@@ -4,10 +4,10 @@ import {
     Routes,
     Route
 } from "react-router-dom";
-import FetchJob from './component/page/FetchJob';
-import Information from './component/page/Information';
-import MainPage from "./component/page/MainPage";
-import TopMenu from "./component/UI/TopMenu";
+import FetchJob from './oregano/pages/FetchJob/FetchJob';
+import Information from './oregano/pages/Information/Information';
+import MainPage from "./oregano/pages/Main/Main";
+import TopMenu from "./oregano/layouts/TopMenu";
 
 function App() {
     return (

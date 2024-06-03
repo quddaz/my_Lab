@@ -11,8 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import quddaz.jwtTest.Config.jwt.JWTUtil;
-import quddaz.jwtTest.Entity.DTO.CustomUserDetails;
+import quddaz.jwtTest.auth.CustomUserDetails;
 
 import java.util.Collection;
 import java.util.Iterator;
