@@ -2,6 +2,7 @@ import React from "react";
 import KakaoMap from "../../contents/kakaoMap/KakaoMap";
 import EmploymentSupport from "../../contents/assistance/EmploymentSupport";
 import GovermentSupport from "../../contents/assistance/GovermentSupport";
+import JobSuccessPackage from "../../contents/assistance/JobSuccessPackage";
 import './Information.css';
 
 function Information() {
@@ -12,6 +13,7 @@ function Information() {
             </div>
             <div className="information-section">
                 <div className="information-assistance-section">
+                    <JobSuccessPackage/>
                     <EmploymentSupport/>
                     <GovermentSupport/>
                 </div>

@@ -59,7 +59,7 @@ thead th {
 
 tbody td {
     padding: 15px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #c5c5c5;
     color: #666;
 }
 
@@ -80,7 +80,6 @@ img {
     border-radius: 8px;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
     table, thead, tbody, th, td, tr {
         display: block;
@@ -92,7 +91,7 @@ img {
 
     tbody tr {
         margin-bottom: 15px;
-        border-bottom: 2px solid #ddd;
+        border-bottom: 2px solid #7d7b7b;
     }
 
     tbody td {
