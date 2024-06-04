@@ -29,16 +29,4 @@ public class UserService {
         .password(bCryptPasswordEncoder.encode(password))
         .build());
   }
-  //임시 사용 로그인 필터 구현 시 삭제 예정
-  public String login(String userName, String password){
-    //userName 없음
-    User user = userRepository.findByUserName(userName)
-        .orElseThrow(() ->
-          new AppException(UserErrorCode.FAILD_LOGIN));
-    //password 틀림
-    if(!bCryptPasswordEncoder.matches(password, user.getPassword())){
-      throw new AppException(UserErrorCode.FAILD_LOGIN);
-    }
-    return "token";
-  }
 }

@@ -19,7 +19,8 @@ import java.util.Date;
 public class JwtTokenProvider {
     private final SecretKey secretKey;
     private final UserDetailsService userDetailsService;
-    private final long tokenRemiteTime = 1000L * 60 * 30; // 30분
+    private final long tokenRemiteTime = 1000L * 60 * 10; // 10분
+    private final long RefreshTokenRemiteTime = 1000L * 60 * 60 * 24; // 1일
 
     public JwtTokenProvider(@Value("${spring.jwt.secret}")String secret, UserDetailsService userDetailsService) {
         secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
@@ -39,13 +40,29 @@ public class JwtTokenProvider {
         UserDetails userDetails = userDetailsService.loadUserByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
-    public String createToken(String username) {
+    public String getCategory(String token) {
+
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("category", String.class);
+    }
+    public String createAccessToken(String category,String username) {
 
         return Jwts.builder()
+            .claim("category", category)
             .claim("username", username)
             .issuedAt(new Date(System.currentTimeMillis()))
             .expiration(new Date(System.currentTimeMillis() + tokenRemiteTime))
             .signWith(secretKey)
             .compact();
     }
+    public String createRefreshToken(String category,String username) {
+
+        return Jwts.builder()
+            .claim("category", category)
+            .claim("username", username)
+            .issuedAt(new Date(System.currentTimeMillis()))
+            .expiration(new Date(System.currentTimeMillis() + RefreshTokenRemiteTime))
+            .signWith(secretKey)
+            .compact();
+    }
+
 }

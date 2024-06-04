@@ -1,5 +1,10 @@
 package REST.API.global.Config.jwt;
 
+import REST.API.global.Exception.BaseException.AppException;
+import REST.API.global.Exception.errorCode.AuthErrorCode;
+import REST.API.global.Exception.errorCode.UserErrorCode;
+import REST.API.global.Response.ResponseDto;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * jwt를 검증하기 위한 커스텀 필터
@@ -24,39 +30,36 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        //request에서 Authorization 헤더를 찾음
-        String authorization= request.getHeader("Authorization");
+        // 헤더에서 Access Token을 꺼냄
+        String accessToken = request.getHeader("access");
 
-        //Authorization 헤더 검증
-        if (authorization == null || !authorization.startsWith("Bearer ")) {
-
-            System.out.println("token null");
-            //필터 다음으로 넘겨줌(JWT 검증 -> 로그인)
+        // 토큰이 없다면 다음 필터로 넘김
+        if (accessToken == null) {
             filterChain.doFilter(request, response);
-
-            //조건이 해당되면 메소드 종료
             return;
         }
 
-        //Bearer 부분 제거 후 순수 토큰만 획득
-        String token = authorization.split(" ")[1];
-
-        //토큰 소멸 시간 검증
-        if (jwtTokenProvider.isExpired(token)) {
-
-            System.out.println("token expired");
-            filterChain.doFilter(request, response);
-
-            //조건이 해당되면 메소드 종료
-            return;
+        // 토큰 만료 여부 확인, 만료시 다음 필터로 넘기지 않음
+        try {
+            jwtTokenProvider.isExpired(accessToken);
+        } catch (ExpiredJwtException e) {
+            throw new AppException(AuthErrorCode.ACCESS_TOKEN_EXPIRED);
         }
 
+        // 토큰이 access인지 확인 (발급시 페이로드에 명시)
+        String category = jwtTokenProvider.getCategory(accessToken);
 
-        //스프링 시큐리티 인증 토큰 생성
-        Authentication authToken = jwtTokenProvider.getAuthentication(token);
-        //세션에 사용자 등록
+        if (!category.equals("access")) {
+            throw new AppException(AuthErrorCode.INVALID_ACCESS_TOKEN);
+        }
+
+        // 스프링 시큐리티 인증 토큰 생성
+        Authentication authToken = jwtTokenProvider.getAuthentication(accessToken);
+
+        // 세션에 사용자 등록
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
         filterChain.doFilter(request, response);
     }
+
 }
