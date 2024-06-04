@@ -75,7 +75,7 @@ function KakaoMap() {
   return (
     <div className="kakao-map-container">
       <div className="kakao-map-header">
-        <div className="kakao-map-location-heading">오시는 길</div>
+        <div className="kakao-map-location-heading">문의처</div>
         <select className="kakao-map-branch-select" value={selectedBranch} onChange={handleBranchChange}>
           {branches.map(branch => (
             <option key={branch.name} value={branch.name}>{branch.name}</option>

@@ -1,0 +1,114 @@
+/* assistanceStyle.css */
+
+/* General styles */
+
+details {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 20px 0;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+summary {
+    font-size: 1.4em;
+    font-weight: bold;
+    cursor: pointer;
+    list-style: none;
+    margin: -20px -20px 20px;
+    padding: 20px;
+    background: #f1f1f1;
+    border-bottom: 1px solid #ddd;
+    border-radius: 8px 8px 0 0;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+h2 {
+    font-size: 1.6em;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: #444;
+}
+
+p {
+    margin: 10px 0;
+    font-size: 1.1em;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+}
+
+thead th {
+    background-color: #f7f7f7;
+    padding: 15px;
+    border-bottom: 2px solid #ddd;
+    text-align: left;
+    color: #555;
+}
+
+tbody td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    color: #666;
+}
+
+tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.alert {
+    color: red;
+    font-weight: bold;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px 0;
+    border-radius: 8px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead tr {
+        display: none;
+    }
+
+    tbody tr {
+        margin-bottom: 15px;
+        border-bottom: 2px solid #ddd;
+    }
+
+    tbody td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+        color: #444;
+    }
+}

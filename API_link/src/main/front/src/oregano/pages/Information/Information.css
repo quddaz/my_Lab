@@ -1,0 +1,42 @@
+/* Information.css */
+
+.information-container {
+    font-family: 'Arial', sans-serif;
+    background-color: #d1ead1;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.information-header {
+    width: 90%;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.information-section {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.information-assistance-section {
+    width: 90%;
+    display: flex;
+    margin-left: -33px;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.information-textcontainer {
+    width: 90%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+}

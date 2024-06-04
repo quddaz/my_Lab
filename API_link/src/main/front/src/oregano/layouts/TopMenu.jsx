@@ -40,7 +40,7 @@ const NavLinks = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
-  margin-right: 20px;
+  margin-right: 60px;
   li {
     margin: 0 1rem;
     a {
@@ -76,7 +76,7 @@ const TopMenu = () => {
         <NavLinks>
           <li><Link to="/" className="btn">Home</Link></li>
           <li><Link to="/FetchJob" className="btn">구인현황검색</Link></li>
-          <li><Link to="/Information" className="btn">공단정보</Link></li>
+          <li><Link to="/Information" className="btn">지원사업정보</Link></li>
         </NavLinks>
       </Nav>
       <ContentWrapper>
