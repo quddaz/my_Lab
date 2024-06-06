@@ -5,7 +5,8 @@ function formatNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-function PopulationGraph({ data }) {
+//최적화를 위해 들어오는 data가 바뀌지 않았다면 재렌더링 방지 
+const PopulationGraph = React.memo(({ data }) => {
   const halfLength = Math.ceil(data.length / 2);
   const firstHalf = data.slice(0, halfLength);
   const secondHalf = data.slice(halfLength);
@@ -36,6 +37,6 @@ function PopulationGraph({ data }) {
       </tbody>
     </table>
   );
-}
+});
 
 export default PopulationGraph;

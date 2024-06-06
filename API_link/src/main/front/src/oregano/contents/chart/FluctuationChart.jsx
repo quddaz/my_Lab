@@ -36,7 +36,6 @@ const abbreviateRegion = (regionName) => {
   return abbreviationMap[regionName] || regionName;
 };
 
-// 숫자 값을 1,000,000 형식으로 변환
 const tickFormatY = (tickItem) => {
   return tickItem >= 1000 ? tickItem.toLocaleString() : tickItem;
 };
@@ -45,8 +44,8 @@ const tooltipFormat= (value) => {
   return value >= 1000 ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : value;
 };
 
-const FluctuationChart = ({ data }) => {
-  // "전국"을 제외한 데이터 필터링
+//최적화를 위해 들어오는 데이터가 바뀌지 않았다면 재렌더링 방지
+const FluctuationChart = React.memo(({ data }) => {
   const filteredData = data.filter(entry => entry.C1_NM !== "전국");
 
   return (
@@ -67,7 +66,7 @@ const FluctuationChart = ({ data }) => {
             tickLine={false}
             axisLine={false}
             tick={{ fontSize: 10 }}
-            tickFormatter={(value) => abbreviateRegion(value)} // Use abbreviations for tick labels
+            tickFormatter={(value) => abbreviateRegion(value)}
           />
           <YAxis
             yAxisId="left"
@@ -79,7 +78,7 @@ const FluctuationChart = ({ data }) => {
             tickFormatter={tickFormatY}
           />
           <Tooltip
-            labelFormatter={(value) => abbreviateRegion(value)} // Use abbreviations for tooltip labels
+            labelFormatter={(value) => abbreviateRegion(value)}
             formatter={tooltipFormat}
           />
           <Legend />
@@ -88,7 +87,7 @@ const FluctuationChart = ({ data }) => {
       </ResponsiveContainer>
     </StyledWrapper>
   );
-};
+});
 
 export default FluctuationChart;
 

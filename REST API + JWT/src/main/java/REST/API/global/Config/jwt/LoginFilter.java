@@ -1,10 +1,10 @@
 package REST.API.global.Config.jwt;
 
 import REST.API.User.domain.dto.UserLoginRequest;
-import REST.API.global.auth.CustomUserDetails;
+import REST.API.global.Utils.CookieStore;
+import REST.API.global.Config.jwt.Serivce.RefreshService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +23,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
+    private final RefreshService refreshService;
+    private final CookieStore cookieStore;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -56,30 +58,19 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
-        //로그인 성공 시 유저 정보 조회
-        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-
-        String userName = customUserDetails.getUsername();
-
+        String userName = authentication.getName();
         //토큰 생성
         String AccessToken = jwtTokenProvider.createAccessToken("access",userName);
         String RefreshToken = jwtTokenProvider.createRefreshToken("refresh",userName);
+        //Refresh 토큰 저장
+        refreshService.addRefresh(userName, RefreshToken);
+
         //응답 설정
         response.setHeader("access", AccessToken);
-        response.addCookie(createCookie("refresh", RefreshToken));
+        response.addCookie(cookieStore.createCookie("refresh", RefreshToken));
         response.setStatus(HttpStatus.OK.value());
     }
-    //쿠키 생성 메소드
-    private Cookie createCookie(String key, String value) {
 
-        Cookie cookie = new Cookie(key, value);
-        cookie.setMaxAge(24*60*60); // 쿠키의 생명 주기
-        //cookie.setSecure(true); //https 통신 시 진행
-        //cookie.setPath("/"); //쿠키의 적용 범위 설정 가능
-        cookie.setHttpOnly(true); //XSS 방어를 위한 설정
-
-        return cookie;
-    }
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed){
         response.setStatus(401);
