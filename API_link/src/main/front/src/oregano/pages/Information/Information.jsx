@@ -3,6 +3,8 @@ import KakaoMap from "../../contents/kakaoMap/KakaoMap";
 import EmploymentSupport from "../../contents/assistance/EmploymentSupport";
 import GovermentSupport from "../../contents/assistance/GovermentSupport";
 import JobSuccessPackage from "../../contents/assistance/JobSuccessPackage";
+import AssistiveDeviceSupport from "../../contents/assistance/AssistiveDeviceSupport";
+import WorkSupportAssistant from "../../contents/assistance/WorkSupportAssistant";
 import './Information.css';
 
 function Information() {
@@ -16,6 +18,8 @@ function Information() {
                     <JobSuccessPackage/>
                     <EmploymentSupport/>
                     <GovermentSupport/>
+                    <AssistiveDeviceSupport/>
+                    <WorkSupportAssistant/>
                 </div>
             </div>
             <div className="information-section">
