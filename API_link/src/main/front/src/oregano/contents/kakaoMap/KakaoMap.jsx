@@ -2,29 +2,33 @@ import React, { useEffect, useState } from 'react';
 import branches from '../../data/branches';
 import './KakaoMap.css';
 
-
 function KakaoMap() {
   const [selectedBranch, setSelectedBranch] = useState('서울지역본부');
 
   useEffect(() => {
+
+    
     const mapScript = document.createElement('script');
     mapScript.async = true;
-    mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=8f80c29372501ab918f32c6f4da8763f&libraries=services&autoload=false`;
+    mapScript.src = process.env.REACT_APP_KAKAO_MAP_KEY;
     document.head.appendChild(mapScript);
-
     mapScript.onload = () => {
-      window.kakao.maps.load(() => {
-        const container = document.getElementById('map');
-        const options = {
-          center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-          level: 3
-        };
+      if (window.kakao && window.kakao.maps) {
+        console.log("Kakao map script loaded successfully");
+        window.kakao.maps.load(() => {
+          const container = document.getElementById('map');
+          const options = {
+            center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+            level: 3
+          };
 
-        const map = new window.kakao.maps.Map(container, options);
-        showMarker(map, selectedBranch);
-      });
+          const map = new window.kakao.maps.Map(container, options);
+          showMarker(map, selectedBranch);
+        });
+      } else {
+        console.error("Kakao map script failed to load");
+      }
     };
-
   }, [selectedBranch]);
 
   const showMarker = (map, branchName) => {

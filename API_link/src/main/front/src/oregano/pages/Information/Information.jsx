@@ -1,5 +1,5 @@
 import React from "react";
-import KakaoMap from "../../contents/kakaoMap/KakaoMap";
+import KakaoMap from "../../contents/KakaoMap/KakaoMap";
 import EmploymentSupport from "../../contents/assistance/EmploymentSupport";
 import GovermentSupport from "../../contents/assistance/GovermentSupport";
 import JobSuccessPackage from "../../contents/assistance/JobSuccessPackage";
