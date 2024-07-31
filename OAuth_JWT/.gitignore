@@ -16,8 +16,11 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
+<<<<<<< HEAD
 # Ignore application.yml files
 application.yml
+=======
+>>>>>>> 1b79a010352af3c1e89da254d199dc1e97206209
 
 ### IntelliJ IDEA ###
 .idea
