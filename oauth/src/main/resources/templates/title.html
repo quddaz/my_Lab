@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Main Page</title>
+</head>
+<body>
+
+<h1>Welcome, <span th:text="${customOAuth2User.name}">User</span>!</h1>
+
+<h2>User Details</h2>
+<p><strong>Username:</strong> <span th:text="${customOAuth2User.username}">Username</span></p>
+<p><strong>Role:</strong> <span th:text="${customOAuth2User.getRoleSupplier().get()}">Role</span></p>
+
+<!-- Optional: Display additional OAuth2 details -->
+<h3>OAuth2 Provider Information</h3>
+<p><strong>Provider:</strong> <span th:text="${customOAuth2User.getOAuth2ResponseSupplier().get().provider}">Provider</span></p>
+<p><strong>Provider ID:</strong> <span th:text="${customOAuth2User.getOAuth2ResponseSupplier().get().providerId}">Provider ID</span></p>
+
+</body>
+</html>
