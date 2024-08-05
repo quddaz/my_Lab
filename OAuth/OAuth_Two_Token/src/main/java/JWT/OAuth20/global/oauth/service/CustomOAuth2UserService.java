@@ -20,7 +20,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final MemberRepository memberRepository;
-
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
@@ -46,6 +45,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             .username(username)
             .email(member.getEmail())
             .name(member.getName()) // name 필드 추가
+            .profile_image(member.getProfile_image())
             .build();
 
         return new CustomOAuth2User(memberDTO);
@@ -68,9 +68,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .username(username)
                 .name(oAuth2Response.getName())
                 .email(oAuth2Response.getEmail())
+                .profile_image(oAuth2Response.getProfileImage())
                 .role("ROLE_USER")
                 .build();
         } else {
+            member.setProfile_image(oAuth2Response.getProfileImage());
             // 기존 사용자 업데이트
             member.setEmail(oAuth2Response.getEmail());
             member.setName(oAuth2Response.getName());

@@ -15,4 +15,5 @@ public class MemberDTO {
     private String username;
     private String name;
     private String email;
+    private String profile_image;
 }

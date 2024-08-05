@@ -20,4 +20,5 @@ public class Member {
     private String name;
     private String email;
     private String role;
+    private String profile_image;
 }

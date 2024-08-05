@@ -16,11 +16,13 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
-<<<<<<< HEAD
+
 # Ignore application.yml files
+##yml 파일
+src/main/resources/application.yml
 application.yml
-=======
->>>>>>> 1b79a010352af3c1e89da254d199dc1e97206209
+aws.yml
+
 
 ### IntelliJ IDEA ###
 .idea
