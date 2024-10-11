@@ -1,6 +1,7 @@
 package JWT.OAuth20.global.oauth.dto;
 
 import java.util.Map;
+
 public class GoogleResponse implements OAuth2Response{
 
     private final Map<String, Object> attribute;

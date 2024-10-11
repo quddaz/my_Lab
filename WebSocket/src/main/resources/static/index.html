@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>채팅 애플리케이션</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <style>
+      body { font-family: Arial, sans-serif; }
+      #messages { border: 1px solid #ccc; height: 300px; overflow-y: scroll; margin-bottom: 10px; padding: 5px; }
+      #messageInput { width: 80%; }
+  </style>
+</head>
+<body>
+<h1>채팅 애플리케이션</h1>
+<div>
+  <label for="roomId">방 ID:</label>
+  <input type="text" id="roomId" placeholder="방 ID 입력">
+  <button id="joinBtn">입장</button>
+</div>
+<div id="messages"></div>
+<input type="text" id="messageInput" placeholder="메시지를 입력하세요">
+<button id="sendBtn">전송</button>
+
+<script>
+    let stompClient = null;
+    let roomId = '';
+
+    function connect() {
+        const socket = new SockJS('/ws'); // WebSocket 엔드포인트
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log('연결됨: ' + frame);
+            stompClient.subscribe('/chat/' + roomId, function (message) {
+                showMessage(JSON.parse(message.body));
+            });
+        });
+    }
+
+    function joinRoom() {
+        roomId = document.getElementById('roomId').value;
+        connect();
+        document.getElementById('messages').innerHTML = ''; // 메시지 초기화
+    }
+
+    function sendMessage() {
+        const messageInput = document.getElementById('messageInput');
+        const message = {
+            sender: '사용자',
+            message: messageInput.value
+        };
+        stompClient.send('/chat/sendMessage/' + roomId, {}, JSON.stringify(message));
+        messageInput.value = ''; // 입력창 비우기
+    }
+
+    function showMessage(message) {
+        const messagesDiv = document.getElementById('messages');
+        messagesDiv.innerHTML += '<div><strong>' + message.sender + ':</strong> ' + message.message + '</div>';
+        messagesDiv.scrollTop = messagesDiv.scrollHeight; // 스크롤을 맨 아래로
+    }
+
+    document.getElementById('joinBtn').onclick = joinRoom;
+    document.getElementById('sendBtn').onclick = sendMessage;
+</script>
+</body>
+</html>

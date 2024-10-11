@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface S3Uploader {
     String upload(MultipartFile file);
+
     //파일 삭제
     void deleteFile(String fileName);
 

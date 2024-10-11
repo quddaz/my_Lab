@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: local
+  datasource:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+        format_sql: true
