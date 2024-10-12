@@ -5,14 +5,12 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 import stomp.test.domain.chatMessage.entity.ChatMessage;
 import stomp.test.domain.chatMessage.service.ChatMessageService;
 import stomp.test.domain.chatRoom.ChatMessageRequest;
 import stomp.test.domain.chatRoom.entity.ChatRoom;
 import stomp.test.domain.chatRoom.service.ChatRoomService;
 
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,5 +25,4 @@ public class ChatController {
         ChatRoom chatRoom = chatRoomService.findRoomById(roomId);
         return chatMessageService.saveMessage(chatRoom, request.sender(), request.message());
     }
-
 }
