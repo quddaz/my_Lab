@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: local
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://svc.sel5.cloudtype.app:31608/db?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    username: root
+    password: quddnd
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+        format_sql: true
+
+api-key: sFd76vlvMGfsJNeEHd0ifb8V08Jb0kPQHvDAg6rlqp1W%2BFstDVJ0E7o5oAS9INRW7qA9rB4PY0XNiDV%2BJD5OSQ%3D%3D
