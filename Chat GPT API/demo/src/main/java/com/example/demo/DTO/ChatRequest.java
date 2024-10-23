@@ -31,16 +31,16 @@ public record ChatRequest(
                           "courses": [
                             {
                               "name": "Location 1",
-                              "content": "Description of Location 1.",
+                              "content": "Description of Location 1. (설명은 최대 20자)",
                               "address" : "",
-                              "rating": "Rating",
+                              "rating": "Rating (ex. 4.5)",
                               "estimated travel time": "Travel time"
                             },
                             {
                               "name": "Location 2",
-                              "content": "Description of Location 2.",
+                              "content": "Description of Location 2. (설명은 최대 20자)",
                               "address" : "",
-                              "rating": "Rating",
+                              "rating": "Rating (ex. 4.5)",
                               "estimated travel time": "Travel time"
                             }
                           ],
@@ -48,6 +48,7 @@ public record ChatRequest(
                         }
                     
                       5. 항상 응답을 명확하고 간결하게 구조화하여 제공하세요. 장소와 경로를 나열할 때는 목록 형식(숫자 또는 불릿)을 사용하세요. 사용자가 특정 선호 사항(예: 커피숍만) 제공 시, 해당 선호 사항에 맞추어 응답을 조정하세요.
+                      6. 또한 사용자의 응답 언어로 대답해주세요.
                       ""\"
                     }
                         """),
