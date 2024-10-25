@@ -28,6 +28,7 @@ public record ChatRequest(
                     
                         {
                           "title": "Analysis Title for the Address.",
+                          "content": "title의 설명",
                           "courses": [
                             {
                               "name": "Location 1",

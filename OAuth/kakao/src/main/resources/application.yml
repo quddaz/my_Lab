@@ -1,0 +1,8 @@
+jwt:
+  secret-key: "vmfhaltmskdlstkfkdgodyroqkfwkdbalroqkfwkdbalaaaaaaaaaaaaaaaabbbbb"
+  issuer: "quddnd"
+  access-token-expiration: 3600000  # 1 hour in milliseconds
+  refresh-token-expiration: 1209600000  # 14 days in milliseconds
+kakao:
+  feign:
+    base-url: https://kapi.kakao.com
