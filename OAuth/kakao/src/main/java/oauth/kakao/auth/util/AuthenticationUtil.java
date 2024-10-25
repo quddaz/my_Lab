@@ -18,7 +18,7 @@ public class AuthenticationUtil {
     public static void makeAuthentication(Member member) {
         // Authentication 정보 만들기
         AuthUser authUser = AuthUser.builder()
-            .memberId(member.getMemberId())
+            .memberId(member.getId())
             .socialId(member.getSocialId())
             .email(member.getEmail())
             .roles(Collections.singletonList(member.getRoleKey()))

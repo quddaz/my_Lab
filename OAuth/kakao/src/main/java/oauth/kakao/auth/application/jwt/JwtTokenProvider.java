@@ -46,7 +46,7 @@ public class JwtTokenProvider {
             .setExpiration(accessValidity)
             // 토큰을 발급한 주체를 설정
             .setIssuer(jwtProperties.getIssuer())
-            .setSubject(member.getMemberId().toString())
+            .setSubject(member.getId().toString())
             .addClaims(Map.of(MEMBER_ROLE, member.getRole().name()))
             // 토큰이 JWT 타입 명시
             .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
@@ -68,7 +68,7 @@ public class JwtTokenProvider {
             .setExpiration(refreshValidity)
             // 토큰을 발급한 주체를 설정
             .setIssuer(jwtProperties.getIssuer())
-            .setSubject(member.getMemberId().toString())
+            .setSubject(member.getId().toString())
             .addClaims(Map.of(MEMBER_ROLE, member.getRole().name()))
             // 토큰이 JWT 타입 명시
             .setHeaderParam(Header.TYPE, Header.JWT_TYPE)

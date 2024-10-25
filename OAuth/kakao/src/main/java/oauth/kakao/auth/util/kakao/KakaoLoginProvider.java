@@ -22,7 +22,6 @@ public class KakaoLoginProvider implements SocialLoginProvider {
         return Member.builder()
             .email(kakaoUserResponse.kakaoAccount().email())
             .role(Role.GUEST)
-            .gender(Gender.NONE)
             .socialId(kakaoUserResponse.id().toString())    //social id
             .oAuthType(OAuthType.KAKAO)
             .build();
