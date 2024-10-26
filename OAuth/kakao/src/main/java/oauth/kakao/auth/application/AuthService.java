@@ -7,6 +7,7 @@ import oauth.kakao.auth.dto.request.LoginRequest;
 import oauth.kakao.auth.dto.request.ReissueRequest;
 import oauth.kakao.auth.dto.response.LoginResponse;
 import oauth.kakao.auth.dto.response.ReissueResponse;
+import oauth.kakao.auth.exception.LoginTypeNotSupportException;
 import oauth.kakao.auth.exception.TokenNotValidException;
 import oauth.kakao.auth.exception.errorCode.AuthErrorCode;
 import oauth.kakao.auth.util.SocialLoginProvider;
@@ -36,9 +37,7 @@ public class AuthService {
 
         //로그인 및 회원가입
         Member authenticatedMember = memberRepository.findBySocialId(member.getSocialId())
-            .orElseGet(() -> {
-                return memberRepository.save(member);
-            });
+            .orElseGet(() -> memberRepository.save(member));
 
         //token 만들기
         String accessToken = jwtTokenProvider.createAccessToken(authenticatedMember);
@@ -50,7 +49,7 @@ public class AuthService {
     private Member getUserDataFromPlatform(String accessToken, String providerInfo) {
         SocialLoginProvider signInProvider = loginProviders.get(providerInfo + "LoginProvider");
         if (signInProvider == null) {
-            throw new IllegalArgumentException("Unknown provider: " + providerInfo);
+            throw new LoginTypeNotSupportException(AuthErrorCode.LOGIN_TYPE_NOT_SUPPORT);
         }
         return signInProvider.getUserData(accessToken);
     }
