@@ -40,23 +40,21 @@ public class Member implements OAuth2User{
 
     @Column(name = "social_id", length = 100)
     private String socialId;
-
+    @Column(name = "profile_image", length = 200)
+    private String profile_image;
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Builder
-    public Member(String email, String name, OAuthType oAuthType, String socialId, Role role) {
+    public Member(String email, String name, OAuthType oAuthType, String socialId, Role role, String profile_image) {
         this.email = email;
         this.name = name;
         this.oAuthType = oAuthType;
         this.socialId = socialId;
         this.role = role;
-    }
-
-    public void uploadMember(String name) {
-        this.name = name;
+        this.profile_image = profile_image;
     }
 
     public String getRoleKey() {
@@ -70,7 +68,8 @@ public class Member implements OAuth2User{
             "email", this.email,
             "name", this.name,
             "socialId", this.socialId,
-            "oauthType", this.oAuthType
+            "oauthType", this.oAuthType,
+            "profile_image", this.profile_image
         );
     }
 

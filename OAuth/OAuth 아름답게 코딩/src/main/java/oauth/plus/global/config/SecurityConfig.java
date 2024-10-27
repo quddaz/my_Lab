@@ -2,7 +2,7 @@ package oauth.plus.global.config;
 
 import lombok.RequiredArgsConstructor;
 import oauth.plus.auth.application.CustomOAuth2UserService;
-import oauth.plus.auth.presentation.filter.CustomSuccessHandler;
+import oauth.plus.auth.presentation.handler.CustomSuccessHandler;
 import oauth.plus.auth.presentation.filter.JwtAccessDeniedHandler;
 import oauth.plus.auth.presentation.filter.JwtAuthenticationEntryPoint;
 import oauth.plus.auth.presentation.filter.JwtFilter;
@@ -47,7 +47,7 @@ public class SecurityConfig {
                 .successHandler(customSuccessHandler)
             )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login/oauth2/code/**", "/refresh", "/api/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                .requestMatchers("/login/oauth2/code/**", "/reissue", "/api/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

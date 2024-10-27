@@ -1,7 +1,6 @@
 package oauth.plus.auth.dto;
 
 import lombok.Builder;
-
 import java.util.List;
 
 @Builder
