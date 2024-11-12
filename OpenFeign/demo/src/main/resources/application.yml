@@ -3,9 +3,9 @@ spring:
     active: local
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://svc.sel5.cloudtype.app:31608/db?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    url: jdbc:
     username: root
-    password: quddnd
+    password:
   jpa:
     hibernate:
       ddl-auto: update
